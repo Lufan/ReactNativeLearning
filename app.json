@@ -1,0 +1,17 @@
+{
+  "name": "CitiesApp",
+  "displayName": "CitiesApp",
+  "expo": {
+    "name": "CitiesApp",
+    "slug": "CitiesApp",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
