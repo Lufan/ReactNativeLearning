@@ -1,19 +1,50 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
+import Tabs from './src';
+import { CityItem } from './src/Cities/City';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
+interface AppState {
+  cities: Array<CityItem>;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+console.log('APP');
+export default class App extends Component<{}, AppState> {
+  state: AppState = {
+    cities: []
+  }
+  addCity = (city: CityItem) => {
+    console.log('add city: ', city)
+    const cities = this.state.cities
+    cities.push(city)
+    this.setState({ cities })
+  }
+  addLocation = (location: string, city: CityItem) => {
+    const index = this.state.cities.findIndex(item => {
+      return item.id === city.id
+    })
+    const chosenCity = this.state.cities[index]
+    chosenCity.locations.push(location)
+    const cities = [
+      ...this.state.cities.slice(0, index),
+      chosenCity,
+      ...this.state.cities.slice(index + 1)
+    ]
+    this.setState({
+      cities
+    })
+  }
+  render() {
+    console.log('cities: ', this.state.cities);
+    return (
+      <Tabs
+        cities={this.state.cities}
+        addCity={this.addCity}
+        addLocation={this.addLocation}
+      />
+    )
+  }
+}
